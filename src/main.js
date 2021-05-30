@@ -7,6 +7,8 @@ import store from './store'
 import VueCookies from 'vue-cookies'
 import VueResource from 'vue-resource'
 
+import "@/scss/_main.scss"
+
 Vue.config.productionTip = false
 
 Vue.use(VueCookies)

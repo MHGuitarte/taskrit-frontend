@@ -1,29 +1,38 @@
-body, html {
-    margin: 0;
-    padding: 0;
-    background-color: $background;
+body,
+html,
+* {
+  margin: 0;
+  padding: 0;
+  background-color: $background;
+  font-family: $text;
 }
 
 h1 {
-
+  font-family: $heading;
+  font-size: $h1;
 }
 
 h2 {
-
+  font-family: $heading;
+  font-size: $h2;
 }
 
 h3 {
-
+  font-family: $heading;
+  font-size: $h3;
 }
 
 h4 {
-
+  font-family: $heading;
+  font-size: $h4;
 }
 
 h5 {
-
+  font-family: $heading;
+  font-size: $h5;
 }
 
 h6 {
-
+  font-family: $heading;
+  font-size: $h6;
 }
