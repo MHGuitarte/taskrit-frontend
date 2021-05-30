@@ -1,0 +1,58 @@
+// font imports
+@font-face {
+  font-family: "Roboto Medium";
+  src: url("../assets/fonts/Roboto-Medium.ttf");
+}
+
+@font-face {
+  font-family: "Roboto Bold";
+  src: url("../assets/fonts/Roboto-Medium.ttf");
+}
+
+@font-face {
+  font-family: "sans-serif-regular";
+  src: sans-serif;
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: "sans-serif-bold";
+  src: sans-serif;
+  font-weight: bold;
+}
+
+@font-face {
+  font-family: "Work Sans Regular";
+  src: url("../assets/fonts/Roboto-Medium.ttf");
+}
+
+@font-face {
+  font-family: "Work Sans Italic";
+  src: url("../assets/fonts/Roboto-Medium.ttf");
+}
+
+// colors
+$primary: #107dac;
+$primary-light: #4fbae8;
+$secondary: #6a7980;
+$accent: #ff8d0d;
+$background: #f1f9fd;
+$positive: #00885f;
+$negative: #ac3f10;
+$placeholder: rgba(112, 112, 112, 0.5);
+$black: #000000;
+$white: #ffffff;
+
+// fonts
+$heading: "Roboto Medium", Helvetica, Arial, "sans-serif-regular";
+$heading-bold: "Roboto Bold", Helvetica, Arial, "sans-serif-bold";
+
+
+// font-size
+$h1: 40px;
+$h2: 32px;
+$h3: 28px;
+$h4: 24px;
+$h5: 20px;
+$h6: 16px;
+$paragraph: 12px;

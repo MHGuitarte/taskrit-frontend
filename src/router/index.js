@@ -1,5 +1,4 @@
 
-import axios from 'axios'
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import UserService from '../service/UserService'
@@ -13,8 +12,7 @@ const routes = [
     name: 'Home',
     component: Home,
     meta: {
-      guest: true,
-      requiresAuth: false // not needed here, will need on later views (NOT NEEDED)
+      requiresAuth: false
     }
   }
 ]
@@ -25,7 +23,7 @@ const router = new VueRouter({
   routes
 })
 
-router.beforeEach(async (to, from, next) => {
+router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
     if (!this.$cookies.isKey('user')) {
       next({
@@ -48,6 +46,8 @@ router.beforeEach(async (to, from, next) => {
         });
       }
     }
+  } else {
+    next();
   }
 });
 

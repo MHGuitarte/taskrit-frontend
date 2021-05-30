@@ -10,12 +10,12 @@
   "dependencies": {
     "@popperjs/core": "^2.9.2",
     "@shopify/draggable": "^1.0.0-beta.8",
-    "axios": "^0.21.1",
     "bootstrap": "^5.0.1",
     "core-js": "^3.6.5",
     "sass": "^1.34.0",
     "vue": "^2.6.11",
     "vue-cookies": "^1.7.4",
+    "vue-resource": "^1.5.2",
     "vue-router": "^3.5.1",
     "vuex": "^3.4.0"
   },
@@ -29,7 +29,7 @@
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.2.2",
     "node-sass": "^6.0.0",
-    "sass-loader": "^11.1.1",
+    "sass-loader": "^10",
     "vue-template-compiler": "^2.6.11"
   },
   "eslintConfig": {
