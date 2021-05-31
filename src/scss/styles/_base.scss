@@ -36,3 +36,9 @@ h6 {
   font-family: $heading;
   font-size: $h6;
 }
+
+*::placeholder {
+  color: $placeholder;
+  font-family: $text-italic;
+  font-style: italic;
+}

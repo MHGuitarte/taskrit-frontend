@@ -9,7 +9,6 @@
       <AccessForm class="col-5 m-0 p-0 landing--form" />
     </div>
     <div v-else class="row">
-      <div class="oa"></div>
       <AccessForm class="col-5 m-0 p-0" />
       <AssetsImage
         src="landing-bg.jpg"
