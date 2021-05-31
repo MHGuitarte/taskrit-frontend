@@ -44,51 +44,5 @@ export default {
     object-fit: cover;
     min-height: 100vh;
   }
-
-  .bounce-to-left {
-    animation: rtl 3s;
-
-    @keyframes rtl {
-      0% {
-        position: absolute;
-        right: 0;
-      }
-
-      25% {
-        right: 43%;
-      }
-
-      99% {
-        left: 0;
-      }
-
-      100% {
-        position: relative;
-      }
-    }
-  }
-
-  .bounce-to-right {
-    animation: ltr 3s;
-
-    @keyframes ltr {
-      0% {
-        position: absolute;
-        left: 0;
-      }
-
-      25% {
-        left: 43%;
-      }
-
-      99% {
-        right: 0;
-      }
-
-      100% {
-        position: relative;
-      }
-    }
-  }
 }
 </style>

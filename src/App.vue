@@ -1,10 +1,11 @@
 <template>
-  <main id="app" class="container-flex">
+  <div id="app" class="container-flex">
     <router-view />
-  </main>
+  </div>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss" global>
+
 #app {
   overflow-x: hidden;
 }

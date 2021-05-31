@@ -1,12 +1,12 @@
 // font imports
 @font-face {
   font-family: "Roboto Medium";
-  src: url("../assets/fonts/Roboto-Medium.ttf");
+  src: url("/src/assets/fonts/Roboto-Medium.ttf");
 }
 
 @font-face {
   font-family: "Roboto Bold";
-  src: url("../assets/fonts/Roboto-Medium.ttf");
+  src: url("/src/assets/fonts/Roboto-Medium.ttf");
 }
 
 @font-face {
@@ -23,12 +23,12 @@
 
 @font-face {
   font-family: "Work Sans Regular";
-  src: url("../assets/fonts/Roboto-Medium.ttf");
+  src: url("/src/assets/fonts/Roboto-Medium.ttf");
 }
 
 @font-face {
   font-family: "Work Sans Italic";
-  src: url("../assets/fonts/Roboto-Medium.ttf");
+  src: url("/src/assets/fonts/Roboto-Medium.ttf");
 }
 
 // colors
@@ -50,6 +50,7 @@ $text: "Work Sans Regular", Helvetica, Arial;
 $text-italic: "Work Sans Italic", Helvetica, Arial;
 
 // font-size
+$access-title: 120px;
 $h1: 40px;
 $h2: 32px;
 $h3: 28px;
