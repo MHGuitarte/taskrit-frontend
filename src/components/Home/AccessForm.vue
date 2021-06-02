@@ -11,7 +11,7 @@
         :class="{ 'mt-4 pt-4': isLogin }"
       />
       <h1 class="access--title" :class="{ 'text-center': isLogin }">
-        {{ isLogin ? "Bienvenido" : "taskrIt" }}
+        {{ isLogin ? 'Bienvenido' : 'taskrIt' }}
       </h1>
     </div>
     <form class="px-5 pt-5">
@@ -46,26 +46,40 @@
         />
       </div>
     </form>
+    <div class="container">
+      <div class="row d-flex justify-content-evenly">
+        <div class="col-6 p-4">
+          <button class="btn btn-lg mx-auto px-5 access--btn access--btn--change" @click.prevent="changeLoginPage">
+            {{ isLogin ? 'Registro' : 'Acceso' }}
+          </button>
+        </div>
+        <div class="col-6 p-4">
+          <button class="btn btn-lg mx-auto px-5 access--btn access--btn--continue">
+            {{ isLogin ? 'Acceder' : 'Registrarse' }}
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
-import AssetsImage from "../Base/AssetsImage.vue";
+import { mapGetters, mapActions } from 'vuex';
+import AssetsImage from '../Base/AssetsImage.vue';
 
 export default {
-  ame: "AccessForm",
+  ame: 'AccessForm',
   components: { AssetsImage },
   computed: {
-    ...mapGetters("landing", ["isLogin"]),
+    ...mapGetters('landing', ['isLogin']),
   },
   methods: {
-    ...mapActions("landing", ["changeLoginPage"]),
-    login: function () {
-      console.log("login");
+    ...mapActions('landing', ['changeLoginPage']),
+    login: function() {
+      console.log('login');
     },
-    register: function () {
-      console.log("register");
+    register: function() {
+      console.log('register');
     },
   },
 };
@@ -98,6 +112,21 @@ export default {
     font-size: $h3;
     font-family: $heading;
     color: $primary;
+  }
+
+  &--btn {
+    color: $white;
+    font-family: $heading-bold;
+    font-size: $h2;
+    margin: auto;
+
+    &--change {
+      background-color: $primary;
+    }
+
+    &--continue {
+      background-color: $positive;
+    }
   }
 }
 </style>
