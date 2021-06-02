@@ -32,7 +32,7 @@ export default {
     AssetsImage,
   },
   computed: {
-    ...mapGetters("landing", ["isLogin"]),
+    ...mapGetters("access", ["isLogin"]),
   },
 };
 </script>

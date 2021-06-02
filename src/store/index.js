@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-import landing from './landing'
+import access from './access'
+import user from './user'
 
 Vue.use(Vuex)
 
@@ -11,11 +12,11 @@ export default new Vuex.Store({
   mutations: {
   },
   getters: {
-
   },
   actions: {
   },
   modules: {
-    landing: landing
+    access: access,
+    user: user
   }
 })
