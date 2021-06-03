@@ -55,37 +55,46 @@ export default {
 
         if (userId) {
           dispatch('changeLoginPage', null, { root: true });
-          dispatch('');
+          dispatch('toggleAccessModal', {
+            type: 'success',
+            message:
+              'Usuario registrado correctamente. Ahora puedes acceder al sistema.',
+          });
         } else {
-          dispatch('accessError', null, { root: true });
+          dispatch('setAccessError');
+
           dispatch(
-            'accessErrorMsg',
-            'Error durante el registro de usuario. Inténtelo más tarde',
-            { root: true }
+            'setAccessErrorMsg',
+            'Error durante el registro de usuario. Inténtelo más tarde'
           );
         }
       } catch (error) {
-        dispatch('accessError', null, { root: true });
+        dispatch('setAccessError');
         dispatch(
-          'accessErrorMsg',
-          'Error durante el registro de usuario. Inténtelo más tarde',
-          { root: true }
+          'setAccessErrorMsg',
+          'Error durante el registro de usuario. Inténtelo más tarde'
         );
+
         return error;
       }
     },
 
-    async loginUser({ commit }, { user, password, save = false }) {
+    async loginUser({ commit, dispatch }, { user, password, save = false }) {
       const { id, username, token, saveLogin } = UserService.login({
         user,
         password,
         save,
       });
 
-      commit('user', { id, username });
-      this.$cookies.set('token', token, saveLogin ? '1w' : '2d');
+      if (token) {
+        commit('user', { id, username });
+        this.$cookies.set('token', token, saveLogin ? '1w' : '2d');
 
-      //TODO: como manejar errores
+        this.$router.push({ name: 'boards', params: { user: username } });
+      } else {
+        dispatch('setAccessError');
+        dispatch('setAccessErrorMsg', 'Usuario o contraseña incorrectos');
+      }
     },
 
     toggleAccessModal({ state, commit }) {

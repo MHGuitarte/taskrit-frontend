@@ -16,23 +16,48 @@
         class="col-7 landing--image img-fluid landing--form"
       />
     </div>
+
+    <div class="modal" id="landing--modal">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Modal title</h5>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters } from 'vuex';
+import { Modal } from 'bootstrap';
 
-import AccessForm from "../components/Home/AccessForm.vue";
-import AssetsImage from "../components/Base/AssetsImage.vue";
+import AccessForm from '../components/Home/AccessForm.vue';
+import AssetsImage from '../components/Base/AssetsImage.vue';
 
 export default {
-  name: "Home",
+  name: 'Home',
   components: {
     AccessForm,
     AssetsImage,
   },
   computed: {
-    ...mapGetters("access", ["isLogin"]),
+    ...mapGetters('access', ['isLogin', 'showAccessModal']),
+  },
+  mounted: function() {
+    this.$store.watch(
+      (state) => state.access.showAccessModal,
+      () => {
+        const modal = new Modal(document.getElementById('landing--modal'));
+        if (this.showAccessModal) {
+          modal.show();
+        } else {
+          modal.hide();
+        }
+      }
+    );
   },
 };
 </script>

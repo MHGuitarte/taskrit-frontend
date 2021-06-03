@@ -16,19 +16,12 @@ const UserParser = {
 
 const UserService = {
   checkToken: async (userToken) => {
-    const isTokenValid = await this.$http.post(checkTokenUrl, {
-      headers: {
-        Authorization: `Bearer ${userToken}`,
-      },
-    });
-
-    return isTokenValid;
+    return await ServiceHelper.post(checkTokenUrl, { token: userToken });
   },
 
-  register: async user => {
+  register: async (user) => {
     try {
-      const { userId } = await ServiceHelper(registerUrl, {
-        method: 'POST',
+      const { userId } = await ServiceHelper.post(registerUrl, {
         requestBody: user,
       });
 
@@ -40,10 +33,9 @@ const UserService = {
 
   login: async (user) => {
     try {
-      const credentials = await this.$http.post(
-        loginUrl,
-        UserParser.parseLoginUser(user)
-      );
+      const credentials = await ServiceHelper.post(loginUrl, {
+        requestBody: UserParser.parseLoginUser(user),
+      });
 
       return credentials;
     } catch (error) {
