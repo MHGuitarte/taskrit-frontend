@@ -4,49 +4,32 @@ export default {
   namespaced: true,
   state: {
     isLogin: false,
-    accessError: false,
-    accessErrorMsg: '',
+    accessMsg: {
+      type: 'danger',
+      message: '',
+    },
     user: {
       id: '',
       username: '',
     },
-    showAccessModal: false,
-    accessModalInfo: {
-      type: 'info',
-      message: '',
-      confirm: 'Aceptar',
-    },
   },
   mutations: {
     isLogin: (state, isLogin) => (state.isLogin = isLogin),
-    accessError: (state, accessError) => (state.accessError = accessError),
-    accessErrorMsg: (state, accessErrorMsg) =>
-      (state.accessErrorMsg = accessErrorMsg),
+    accessMsg: (state, accessMsg) => (state.accessMsg = accessMsg),
     user: (state, user) => (state.user = user),
-    showAccessModal: (state, showAccessModal) =>
-      (state.showAccessModal = showAccessModal),
-    accessModalInfo: (state, accessModalInfo) =>
-      (state.accessModalInfo = accessModalInfo),
   },
   getters: {
     isLogin: (state) => state.isLogin,
-    accessError: (state) => state.accessError,
-    accessErrorMsg: (state) => state.accessErrorMsg,
+    accessMsg: (state) => state.accessMsg,
     getUser: (state) => state.user,
-    showAccessModal: (state) => state.showAccessModal,
-    accessModalInfo: (state) => state.accessModalInfo,
   },
   actions: {
     changeLoginPage({ state, commit }) {
       commit('isLogin', !state.isLogin);
     },
 
-    setAccessError({ state, commit }) {
-      commit('accessError', !state.accessError);
-    },
-
-    setAccessErrorMsg({ commit }, message) {
-      commit('accessErrorMsg', message);
+    setAccessMsg({ commit }, { type, message }) {
+      commit('accessMsg', { type, message });
     },
 
     async registerUser({ dispatch }, user) {
@@ -54,62 +37,51 @@ export default {
         const userId = await UserService.register(user);
 
         if (userId) {
-          dispatch('changeLoginPage', null, { root: true });
-          dispatch('toggleAccessModal', {
+          dispatch('changeLoginPage');
+          dispatch('setAccessMsg', {
             type: 'success',
             message:
-              'Usuario registrado correctamente. Ahora puedes acceder al sistema.',
+              'Usuario creado correctamente. Ahora puede empezar a usar TaskrIt.',
           });
         } else {
-          dispatch('setAccessError');
-
-          dispatch(
-            'setAccessErrorMsg',
-            'Error durante el registro de usuario. Inténtelo más tarde'
-          );
+          dispatch('setAccessMsg', {
+            type: 'danger',
+            message:
+              'Se produjo un error durante el registro. Por favor, inténtelo más tarde.',
+          });
         }
       } catch (error) {
-        dispatch('setAccessError');
-        dispatch(
-          'setAccessErrorMsg',
-          'Error durante el registro de usuario. Inténtelo más tarde'
-        );
-
-        return error;
+        console.error('Error registering user : ', error);
+        dispatch('setAccessMsg', {
+          type: 'danger',
+          message:
+            'Se produjo un error durante el registro. Por favor, inténtelo más tarde.',
+        });
       }
     },
 
     async loginUser({ commit, dispatch }, { user, password, save = false }) {
-      const { id, username, token, saveLogin } = UserService.login({
+      
+      const loggedUser = UserService.login({
         user,
         password,
         save,
       });
 
-      if (token) {
-        commit('user', { id, username });
-        this.$cookies.set('token', token, saveLogin ? '1w' : '2d');
+      console.log(loggedUser);
 
-        this.$router.push({ name: 'boards', params: { user: username } });
+      if (loggedUser.token) {
+        commit('user', { id: loggedUser.id, username: loggedUser.username });
+        if (loggedUser.saveLogin) {
+          this.$cookies.set('user', { id: loggedUser.id, username: loggedUser.username, token: loggedUser.token }, '1w');
+        } else {
+          sessionStorage.setItem('token', { id: loggedUser.id, username: loggedUser.username, token: loggedUser.token });
+        }
+
+        this.$router.push({ name: 'boards', params: { user: loggedUser.username } });
       } else {
-        dispatch('setAccessError');
-        dispatch('setAccessErrorMsg', 'Usuario o contraseña incorrectos');
+        dispatch('setAccessMsg', 'Usuario o contraseña incorrectos');
       }
-    },
-
-    toggleAccessModal({ state, commit }) {
-      commit('showAccessModal', !state.showAccessModal);
-    },
-
-    setAccessModalInfo(
-      { commit },
-      { type = 'info', message, confirm = 'Aceptar' }
-    ) {
-      commit('accessModalInfo', {
-        type,
-        message,
-        confirm,
-      });
     },
   },
 };

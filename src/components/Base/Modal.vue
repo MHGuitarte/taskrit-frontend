@@ -1,11 +1,13 @@
 <template>
-  <div>
-    <h1>Hola pepe</h1>
-  </div>
+  
 </template>
 
 <script>
 export default {
-    
-};
+//TODO el modal como componente
+}
 </script>
+
+<style>
+
+</style>

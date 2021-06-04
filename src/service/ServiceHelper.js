@@ -1,49 +1,39 @@
+import axios from 'axios';
+
 export default {
   get: (url, { token = undefined, requestBody = undefined }) => {
-    return fetch(url, {
-      method: 'GET',
-      headers: {
-        Accept: 'application/json',
-        'Content-type': 'application/json',
-        Auhtorization: token ? `Bearer ${token}` : undefined,
-      },
-      body: requestBody ? JSON.stringify(requestBody) : undefined,
-    });
+    const axiosCaller = {
+      url: url,
+      bodyParameters: requestBody,
+      headers: () => (token ? {Authorization: `Bearer ${token}`}: undefined)
+    }
+    return axios.get(axiosCaller);
   },
 
   post: (url, { token = undefined, requestBody = undefined }) => {
-    return fetch(url, {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-type': 'application/json',
-        Auhtorization: token ? `Bearer ${token}` : undefined,
-      },
-      body: requestBody ? JSON.stringify(requestBody) : undefined,
-    });
+    const axiosCaller = {
+      url: url,
+      bodyParameters: requestBody,
+      headers: () => (token ? {Authorization: `Bearer ${token}`}: undefined)
+    }
+    return axios.post(axiosCaller);
   },
 
   put: (url, { token = undefined, requestBody = undefined }) => {
-    return fetch(url, {
-      method: 'PUT',
-      headers: {
-        Accept: 'application/json',
-        'Content-type': 'application/json',
-        Auhtorization: token ? `Bearer ${token}` : undefined,
-      },
-      body: requestBody ? JSON.stringify(requestBody) : undefined,
-    });
+    const axiosCaller = {
+      url: url,
+      bodyParameters: requestBody,
+      headers: () => (token ? {Authorization: `Bearer ${token}`}: undefined)
+    }
+    return axios.put(axiosCaller);
   },
 
   delete: (url, { token = undefined, requestBody = undefined }) => {
-    return fetch(url, {
-      method: 'DELETE',
-      headers: {
-        Accept: 'application/json',
-        'Content-type': 'application/json',
-        Auhtorization: token ? `Bearer ${token}` : undefined,
-      },
-      body: requestBody ? JSON.stringify(requestBody) : undefined,
-    });
+    const axiosCaller = {
+      url: url,
+      bodyParameters: requestBody,
+      headers: () => (token ? {Authorization: `Bearer ${token}`}: undefined)
+    }
+    return axios.delete(axiosCaller);
   },
 };

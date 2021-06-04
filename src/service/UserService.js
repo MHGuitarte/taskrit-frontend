@@ -7,10 +7,10 @@ const registerUrl = `${API_URL}/user/register`;
 const loginUrl = `${API_URL}/user/login`;
 
 const UserParser = {
-  parseLoginUser: ({ username, password, save }) => ({
-    username,
+  parseLoginUser: ({ user, password }) => ({
+    username: user,
     password,
-    saveLogin: save,
+    saveLogin: false,
   }),
 };
 
@@ -19,23 +19,23 @@ const UserService = {
     return await ServiceHelper.post(checkTokenUrl, { token: userToken });
   },
 
-  register: async (user) => {
+  register: (user) => {
     try {
-      const { userId } = await ServiceHelper.post(registerUrl, {
+      const registeredUser = ServiceHelper.post(registerUrl, {
         requestBody: user,
-      });
+      }).then((response) => response.json());
 
-      return !!userId;
+      return registeredUser?.userId;
     } catch (error) {
       return error;
     }
   },
 
-  login: async (user) => {
+  login: (user) => {
     try {
-      const credentials = await ServiceHelper.post(loginUrl, {
+      const credentials = ServiceHelper.post(loginUrl, {
         requestBody: UserParser.parseLoginUser(user),
-      });
+      }).then((response) => console.log(response.json()));
 
       return credentials;
     } catch (error) {
