@@ -60,15 +60,15 @@ export default {
       }
     },
 
-    async loginUser({ commit, dispatch }, { user, password, save = false }) {
+    loginUser({ commit, dispatch }, { username, password, save = false }) {
       
       const loggedUser = UserService.login({
-        user,
+        username,
         password,
         save,
       });
 
-      console.log(loggedUser);
+      console.log('devuelta', loggedUser);
 
       if (loggedUser.token) {
         commit('user', { id: loggedUser.id, username: loggedUser.username });

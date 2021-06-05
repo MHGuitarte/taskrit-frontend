@@ -11,10 +11,14 @@
         :class="{ 'mt-4 pt-4': isLogin }"
       />
       <h1 class="access--title" :class="{ 'text-center': isLogin }">
-        {{ isLogin ? 'Bienvenido' : 'taskrIt' }}
+        {{ isLogin ? "Bienvenido" : "taskrIt" }}
       </h1>
     </div>
-    <form class="px-5 pt-5">
+    <form
+      class="px-5 pt-5"
+      id="access-form"
+      @submit.prevent="isLogin ? login() : register()"
+    >
       <div class="my-3">
         <label for="user-input" class="access--label">Nombre de Usuario</label>
         <input
@@ -53,9 +57,9 @@
     </form>
     <div
       class="my-3 mx-5 p-2 alert"
-      :class="
-        `d-${accessMsg.message ? 'block' : 'none'} alert-${accessMsg.type}`
-      "
+      :class="`d-${accessMsg.message ? 'block' : 'none'} alert-${
+        accessMsg.type
+      }`"
       role="alert"
     >
       {{ accessMsg.message }}
@@ -63,16 +67,31 @@
     <div class="container mt-5">
       <div class="row d-flex justify-content-evenly">
         <button
-          class="d-inline m-1 px-5 py-2 btn btn-lg access--btn access--btn--change"
+          class="
+            d-inline
+            m-1
+            px-5
+            py-2
+            btn btn-lg
+            access--btn access--btn--change
+          "
           @click.prevent="changeLoginPage"
         >
-          {{ isLogin ? 'Registro' : 'Acceso' }}
+          {{ isLogin ? "Registro" : "Acceso" }}
         </button>
         <button
-          class="d-inline m-1 px-5 py-2 btn btn-lg access--btn access--btn--continue"
-          @click.prevent="isLogin ? login() : register()"
+          type="submit"
+          form="access-form"
+          class="
+            d-inline
+            m-1
+            px-5
+            py-2
+            btn btn-lg
+            access--btn access--btn--continue
+          "
         >
-          {{ isLogin ? 'Acceder' : 'Registrarse' }}
+          {{ isLogin ? "Acceder" : "Registrarse" }}
         </button>
       </div>
     </div>
@@ -80,41 +99,41 @@
 </template>
 
 <script>
-import { mapState, mapGetters } from 'vuex';
-import AssetsImage from '../Base/AssetsImage.vue';
+import { mapState, mapGetters } from "vuex";
+import AssetsImage from "../Base/AssetsImage.vue";
 
 export default {
-  name: 'AccessForm',
+  name: "AccessForm",
   components: { AssetsImage },
-  data: function() {
+  data: function () {
     return {
-      username: '',
-      email: '',
-      password: '',
+      username: "",
+      email: "",
+      password: "",
     };
   },
   computed: {
     ...mapState({
       accessError: (state) => state.access.accessError,
     }),
-    ...mapGetters('access', ['isLogin', 'accessMsg']),
+    ...mapGetters("access", ["isLogin", "accessMsg"]),
   },
   methods: {
-    register: function() {
-      this.$store.dispatch('access/registerUser', {
+    register: function () {
+      this.$store.dispatch("access/registerUser", {
         username: this.username,
         email: this.email,
         password: this.password,
       });
     },
-    login: function() {
-      this.$store.dispatch('access/loginUser', {
-        user: this.username,
+    login: function () {
+      this.$store.dispatch("access/loginUser", {
+        username: this.username,
         password: this.password,
       });
     },
-    changeLoginPage: function() {
-      this.$store.dispatch('access/changeLoginPage');
+    changeLoginPage: function () {
+      this.$store.dispatch("access/changeLoginPage");
     },
   },
 };

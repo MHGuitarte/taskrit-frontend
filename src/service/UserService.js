@@ -1,29 +1,26 @@
-import ServiceHelper from './ServiceHelper';
+import axios from 'axios';
 
-const API_URL = 'http://localhost:8080';
+const API_URL = process.env.API_URL || 'http://localhost:8080';
 
 const checkTokenUrl = `${API_URL}/user/checkToken`;
 const registerUrl = `${API_URL}/user/register`;
 const loginUrl = `${API_URL}/user/login`;
 
-const UserParser = {
-  parseLoginUser: ({ user, password }) => ({
-    username: user,
-    password,
-    saveLogin: false,
-  }),
-};
+
+const parseLoginUser = ({ username, password }) => ({
+  username,
+  password,
+  saveLogin: false,
+});
 
 const UserService = {
   checkToken: async (userToken) => {
-    return await ServiceHelper.post(checkTokenUrl, { token: userToken });
+    return await (await axios.post(checkTokenUrl, null, { headers: { Authorization: `Bearer ${userToken}` } })).data
   },
 
-  register: (user) => {
+  register: async (user) => {
     try {
-      const registeredUser = ServiceHelper.post(registerUrl, {
-        requestBody: user,
-      }).then((response) => response.json());
+      const registeredUser = await (await axios.post(registerUrl, user)).data
 
       return registeredUser?.userId;
     } catch (error) {
@@ -31,11 +28,11 @@ const UserService = {
     }
   },
 
-  login: (user) => {
+  login: async (user) => {
     try {
-      const credentials = ServiceHelper.post(loginUrl, {
-        requestBody: UserParser.parseLoginUser(user),
-      }).then((response) => console.log(response.json()));
+      const credentials = await (await axios.post(loginUrl, parseLoginUser(user))).data;
+
+      console.log(credentials)
 
       return credentials;
     } catch (error) {
