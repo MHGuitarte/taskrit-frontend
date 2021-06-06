@@ -116,7 +116,7 @@ export default {
     ...mapState({
       accessError: (state) => state.access.accessError,
     }),
-    ...mapGetters("access", ["isLogin", "accessMsg"]),
+    ...mapGetters("access", ["isLogin", "accessMsg", "getUser"]),
   },
   methods: {
     register: function () {
@@ -127,10 +127,16 @@ export default {
       });
     },
     login: function () {
-      this.$store.dispatch("access/loginUser", {
+      const isLogedSuccesfully = this.$store.dispatch("access/loginUser", {
         username: this.username,
         password: this.password,
       });
+
+      if (isLogedSuccesfully) {
+        this.$router.push({
+          name: "Boards",
+        });
+      }
     },
     changeLoginPage: function () {
       this.$store.dispatch("access/changeLoginPage");

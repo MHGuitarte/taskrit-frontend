@@ -32,8 +32,6 @@ const UserService = {
     try {
       const credentials = await (await axios.post(loginUrl, parseLoginUser(user))).data;
 
-      console.log(credentials)
-
       return credentials;
     } catch (error) {
       return error;

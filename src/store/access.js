@@ -1,9 +1,10 @@
 import UserService from '@/service/UserService';
+import Cookies from 'js-cookie';
 
 export default {
   namespaced: true,
   state: {
-    isLogin: false,
+    isLogin: true,
     accessMsg: {
       type: 'danger',
       message: '',
@@ -60,27 +61,32 @@ export default {
       }
     },
 
-    loginUser({ commit, dispatch }, { username, password, save = false }) {
-      
-      const loggedUser = UserService.login({
+    async loginUser({ commit, dispatch }, { username, password, save = false }) {
+
+      const loggedUser = await UserService.login({
         username,
         password,
         save,
       });
 
-      console.log('devuelta', loggedUser);
-
       if (loggedUser.token) {
         commit('user', { id: loggedUser.id, username: loggedUser.username });
-        if (loggedUser.saveLogin) {
-          this.$cookies.set('user', { id: loggedUser.id, username: loggedUser.username, token: loggedUser.token }, '1w');
+        let a = true
+        if (a) {
+          Cookies.set('user', JSON.stringify({ id: loggedUser.id, username: loggedUser.username, token: loggedUser.token }), { expires: 7, sameSite: 'none', secure: true });
         } else {
-          sessionStorage.setItem('token', { id: loggedUser.id, username: loggedUser.username, token: loggedUser.token });
+          sessionStorage.setItem('user', JSON.stringify({ id: loggedUser.id, username: loggedUser.username, token: loggedUser.token }));
         }
 
-        this.$router.push({ name: 'boards', params: { user: loggedUser.username } });
+        return true;
       } else {
-        dispatch('setAccessMsg', 'Usuario o contraseña incorrectos');
+        dispatch('setAccessMsg', {
+          type: 'danger',
+          message:
+            'Usuario o contraseña incorrectos',
+        });
+
+        return false;
       }
     },
   },

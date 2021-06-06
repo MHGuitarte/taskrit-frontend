@@ -1,7 +1,10 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import UserService from '../service/UserService';
-import Home from '../views/Home.vue';
+import Cookies from 'js-cookie';
+
+import Home from '../views/Home';
+import Boards from '../views/Boards';
 
 Vue.use(VueRouter);
 
@@ -17,7 +20,7 @@ const routes = [
   {
     path: '/boards',
     name: 'Boards',
-    component: () => require('@/views/Boards'),
+    component: Boards,
     meta: {
       requiresAuth: true,
     },
@@ -32,14 +35,14 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   if (to.matched.some((record) => record.meta.requiresAuth)) {
-    if (!this.$cookies.isKey('user') || !sessionStorage.getItem('user')) {
+    if (!Cookies.get('user') && !sessionStorage.getItem('user')) {
       next({
         path: '/',
         params: { nextUrl: to.fullPath },
       });
     } else {
       const { token } =
-        JSON.parse(this.$cookies.get('user')) ||
+        Cookies.getJSON('user') ||
         JSON.parse(sessionStorage.getItem('user'));
 
       const isTokenCorrect = UserService.checkToken(token);
@@ -47,7 +50,7 @@ router.beforeEach((to, from, next) => {
       if (isTokenCorrect) {
         next();
       } else {
-        this.$cookies.remove('user');
+        Cookies.remove('user');
         sessionStorage.removeItem('user');
 
         next({

@@ -1,24 +1,12 @@
 // font imports
 @font-face {
   font-family: "Roboto Medium";
-  src: url("https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap");
+  src: url("https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap");
 }
 
 @font-face {
   font-family: "Roboto Bold";
   src: url("https://fonts.googleapis.com/css2?family=Roboto:wght@900&display=swap");
-}
-
-@font-face {
-  font-family: "sans-serif-regular";
-  src: sans-serif;
-  font-weight: normal;
-}
-
-@font-face {
-  font-family: "sans-serif-bold";
-  src: sans-serif;
-  font-weight: bold;
 }
 
 @font-face {
@@ -44,8 +32,8 @@ $black: #000000;
 $white: #ffffff;
 
 // fonts
-$heading: "Roboto Medium", Helvetica, Arial, "sans-serif-regular";
-$heading-bold: "Roboto Bold", Helvetica, Arial, "sans-serif-bold";
+$heading: "Roboto Medium", Helvetica, Arial, sans-serif;
+$heading-bold: "Roboto Bold", Helvetica, Arial, sans-serif;
 $text: "Work Sans Regular", Helvetica, Arial;
 $text-italic: "Work Sans Italic", Helvetica, Arial;
 
