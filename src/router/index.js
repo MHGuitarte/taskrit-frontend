@@ -33,7 +33,7 @@ const router = new VueRouter({
   routes,
 });
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
   if (to.matched.some((record) => record.meta.requiresAuth)) {
     if (!Cookies.get('user') && !sessionStorage.getItem('user')) {
       next({
@@ -45,9 +45,9 @@ router.beforeEach((to, from, next) => {
         Cookies.getJSON('user') ||
         JSON.parse(sessionStorage.getItem('user'));
 
-      const isTokenCorrect = UserService.checkToken(token);
+      const isTokenCorrect = await UserService.checkToken(token);
 
-      if (isTokenCorrect) {
+      if (isTokenCorrect === true) {
         next();
       } else {
         Cookies.remove('user');

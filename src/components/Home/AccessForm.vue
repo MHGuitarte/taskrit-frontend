@@ -126,8 +126,8 @@ export default {
         password: this.password,
       });
     },
-    login: function () {
-      const isLogedSuccesfully = this.$store.dispatch("access/loginUser", {
+    login: async function () {
+      const isLogedSuccesfully = await this.$store.dispatch("access/loginUser", {
         username: this.username,
         password: this.password,
       });

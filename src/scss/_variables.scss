@@ -1,22 +1,26 @@
 // font imports
 @font-face {
   font-family: "Roboto Medium";
-  src: url("https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap");
+  src: url("https://fonts.googleapis.com/css2?family=Roboto");
+  font-weight: 400;
 }
 
 @font-face {
   font-family: "Roboto Bold";
-  src: url("https://fonts.googleapis.com/css2?family=Roboto:wght@900&display=swap");
+  src: url("https://fonts.googleapis.com/css2?family=Roboto");
+  font-weight: 900;
 }
 
 @font-face {
   font-family: "Work Sans Regular";
-  src: url("https://fonts.googleapis.com/css2?family=Work+Sans&display=swap");
+  src: url("https://fonts.googleapis.com/css2");
 }
 
 @font-face {
   font-family: "Work Sans Italic";
-  src: url("https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,400;1,300&display=swap");
+  src: url("https://fonts.googleapis.com/css2?family=Work+Sans");
+  font-weight: 400;
+  font-style: italic;
 }
 
 // colors

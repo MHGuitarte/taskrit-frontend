@@ -1,22 +1,20 @@
 <template>
-  <div class="container-flex boards-wrapper">
-    <div class="lateral-menu--wrapper">
-      <div class="lateral-menu--body">
-        <h6>hola</h6>
-      </div>
-    </div>
+  <div class="container-flex boards--wrapper">
+    <LateralMenu :user="getUser" />
+    <h1 class="h1 row col-9 offset-1 pt-3 boards--user-title">
+      Bienvenido, {{ getUser.username }}
+    </h1>
   </div>
 </template>
 
 <script>
-// TODO menu lateral aparece solo tras recarga y no cambia su width
-import { Offcanvas } from "bootstrap";
+import { mapGetters } from "vuex";
+import LateralMenu from "@/components/Base/LateralMenu.vue";
+
 export default {
-  created: function () {
-    const lateralMenu = new Offcanvas(
-      document.getElementById("lateral-menu-wrapper")
-    );
-    lateralMenu.show();
+  components: { LateralMenu },
+  computed: {
+    ...mapGetters("access", ["getUser"]),
   },
 };
 </script>
@@ -25,32 +23,13 @@ export default {
 .boards {
   &--wrapper {
     min-height: 100vh;
-  }
-}
-
-.lateral-menu {
-  &--wrapper {
-    width: 4%;
-    position: fixed;
-    top: 0;
-    left: 0;
-    visibility: visible;
-    bottom: 0;
-    z-index: 10;
-    display: flex;
-    flex-direction: column;
-    box-sizing: border-box;
-    background-color: $secondary;
-    background-clip: padding-box;
-    outline: 0;
+    background-image: url("../assets/board-bg.png");
+    background-repeat: repeat;
   }
 
-  &--body {
-    flex-grow: 1;
-    padding: 0.3rem;
-    overflow-y: auto;
-    justify-content: center;
-    display: flex;
+  &--user-title {
+    color: $primary;
+    font-family: $heading-bold;
   }
 }
 </style>

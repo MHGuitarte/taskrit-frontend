@@ -15,7 +15,11 @@ const parseLoginUser = ({ username, password }) => ({
 
 const UserService = {
   checkToken: async (userToken) => {
-    return await (await axios.post(checkTokenUrl, null, { headers: { Authorization: `Bearer ${userToken}` } })).data
+    try {
+      return await (await axios.post(checkTokenUrl, null, { headers: { Authorization: `Bearer ${userToken}` } })).data;
+    } catch {
+      return false;
+    }
   },
 
   register: async (user) => {
