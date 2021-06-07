@@ -1,8 +1,8 @@
 body,
 html {
   background-color: $background;
-  
-   & * {
+
+  & * {
     margin: 0;
     padding: 0;
     font-family: $text;
@@ -43,4 +43,11 @@ h6 {
   color: $placeholder;
   font-family: $text-italic;
   font-style: italic;
+}
+
+label {
+  margin-bottom: 0.5rem;
+  font-size: $h4;
+  font-family: $heading;
+  color: $primary;
 }

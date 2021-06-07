@@ -14,8 +14,7 @@
               <font-awesome-icon
                 icon="plus"
                 class="col-4 text-right board-list--add-icon"
-                data-bs-toggle="modal"
-                data-bs-target="#tsk-modal"
+                @click.prevent="toggleModal"
               />
             </div>
           </div>
@@ -26,52 +25,83 @@
       <form
         id="create-board-id"
         @submit.prevent="createBoard"
-        class="px-5 pt-5"
+        class="px-5 pt-2"
       >
-        <input
-          id="board-name-input"
-          class="form-control form-control-lg"
-          type="text"
-          placeholder="¿Qué nombre le pondrás a tu nuevo tablero?"
-          aria-label="Nombre del tablero"
-          v-model="boardName"
-        />
+        <div class="my-3">
+          <label class="create-board--label" for="board-name-input"
+            >Nombre del tablero</label
+          >
+          <input
+            type="text"
+            name="board-name"
+            id="board-name-input"
+            class="form-control form-control-lg"
+            placeholder="¿Qué nombre le pondrás a tu nuevo tablero?"
+            aria-label="Nombre del tablero"
+            v-model="boardName"
+          />
+        </div>
+        <div class="my-3">
+          <label class="create-board--label" for="board-description-input"
+            >(Opcional) Descripción</label
+          >
+          <textarea
+            type="text"
+            name="board-description"
+            id="board-description-input"
+            class="form-control form-control-lg"
+            placeholder="¿Para qué usarás este tablero?"
+            aria-label="Descripción del tablero"
+            v-model="boardDescription"
+          />
+        </div>
       </form>
     </Modal>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-import Cookies from 'js-cookie';
-import { Modal as BootstrapModal } from 'bootstrap';
-import LateralMenu from '@/components/Base/LateralMenu.vue';
-import Modal from '@/components/Base/Modal.vue';
+import { mapGetters } from "vuex";
+import Cookies from "js-cookie";
+import { Modal as BSModal } from "bootstrap";
+import LateralMenu from "@/components/Base/LateralMenu.vue";
+import Modal from "@/components/Base/Modal.vue";
 
 export default {
   components: { LateralMenu, Modal },
-  data: function() {
+  data: function () {
     return {
-      boardName: '',
+      boardName: "",
+      boardDescription: "",
+      modal: {},
     };
   },
   computed: {
-    ...mapGetters('access', ['getUser']),
+    ...mapGetters("access", ["getUser"]),
   },
-  mounted: function() {
-    if (this.getUser.username === '') {
+  mounted: function () {
+    if (this.getUser.username === "") {
       const user =
-        Cookies.getJSON('user') || JSON.parse(sessionStorage.getItem('user'));
+        Cookies.getJSON("user") || JSON.parse(sessionStorage.getItem("user"));
 
-      this.$store.dispatch('access/setUser', user);
+      this.$store.dispatch("access/setUser", user);
     }
+
+    this.modal = new BSModal(document.getElementById("tsk-modal"), {});
   },
   methods: {
-    createBoard: function() {
-      console.log('OLEEE');
-      const tskModal = new BootstrapModal(document.getElementById('tsk-modal'));
-      // TODO por algún motivo no se esconde xd
-      tskModal.hide();
+    toggleModal: function () {
+      this.modal.toggle();
+    },
+    createBoard: function () {
+      this.clearForm();
+      this.toggleModal();
+
+      //TODO llamada a createBoard y asignarla aquí (si todo ok, traer boards por usuario. si no, no se cierra modal y se manda error)
+    },
+    clearForm() {
+      this.boardName = "";
+      this.boardDescription = "";
     },
   },
 };
@@ -81,7 +111,7 @@ export default {
 .boards {
   &--wrapper {
     min-height: 100vh;
-    background-image: url('../assets/board-bg.png');
+    background-image: url("../assets/board-bg.png");
     background-repeat: repeat;
   }
 

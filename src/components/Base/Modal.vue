@@ -4,12 +4,13 @@
     id="tsk-modal"
     tabindex="-1"
     aria-hidden="true"
+    aria-labelledby="#modal--title"
     data-bs-backdrop="static"
   >
     <div class="modal-dialog modal-lg">
-      <div class="modal-content">
+      <div class="modal-content" id="modal--container">
         <div class="modal-header">
-          <h5 class="modal-title">{{ modalTitle }}</h5>
+          <h5 class="modal-title" id="modal--title">{{ modalTitle }}</h5>
           <button
             type="button"
             class="btn-close"
@@ -56,15 +57,15 @@ export default {
   props: {
     modalTitle: {
       type: String,
-      default: '',
+      default: "",
     },
     confirmText: {
       type: String,
-      default: 'Confirmar',
+      default: "Confirmar",
     },
     dismissText: {
       type: String,
-      default: 'Cancelar',
+      default: "Cancelar",
     },
     targetForm: {
       type: String,
@@ -74,4 +75,15 @@ export default {
 };
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+#modal {
+  &--container {
+    background-color: $background;
+  }
+
+  &--title {
+    font-size: $h2;
+    color: $primary;
+  }
+}
+</style>
