@@ -25,6 +25,10 @@ export default {
     getUser: (state) => state.user,
   },
   actions: {
+    setUser({ commit }, { id, username }) {
+      commit('user', { id, username });
+    },
+
     changeLoginPage({ state, commit }) {
       commit('isLogin', !state.isLogin);
     },
