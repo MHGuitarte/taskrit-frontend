@@ -17,7 +17,7 @@ const UserService = {
   checkToken: async (userToken) => {
     try {
       return await (await axios.post(checkTokenUrl, null, { headers: { Authorization: `Bearer ${userToken}` } })).data;
-    } catch {
+    } catch (error) {
       return false;
     }
   },

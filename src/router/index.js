@@ -3,6 +3,8 @@ import VueRouter from 'vue-router';
 import UserService from '../service/UserService';
 import Cookies from 'js-cookie';
 
+import user from '../utils/User';
+
 import Home from '../views/Home';
 import Boards from '../views/Boards';
 
@@ -41,9 +43,7 @@ router.beforeEach(async (to, from, next) => {
         params: { nextUrl: to.fullPath },
       });
     } else {
-      const { token } =
-        Cookies.getJSON('user') ||
-        JSON.parse(sessionStorage.getItem('user'));
+      const { token } = user;
 
       const isTokenCorrect = await UserService.checkToken(token);
 

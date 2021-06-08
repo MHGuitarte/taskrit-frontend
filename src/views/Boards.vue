@@ -18,6 +18,14 @@
               />
             </div>
           </div>
+          <div class="container">
+            <div v-for="board in boards" :key="board.id">
+              <div class="row">
+                <h3>{{ board.name }}</h3>
+                <p>{{ board.description }}</p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -61,47 +69,50 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-import Cookies from "js-cookie";
-import { Modal as BSModal } from "bootstrap";
-import LateralMenu from "@/components/Base/LateralMenu.vue";
-import Modal from "@/components/Base/Modal.vue";
+import { mapGetters } from 'vuex';
+import { Modal as BSModal } from 'bootstrap';
+import LateralMenu from '@/components/Base/LateralMenu.vue';
+import Modal from '@/components/Base/Modal.vue';
+
+import user from '@/utils/User';
 
 export default {
   components: { LateralMenu, Modal },
-  data: function () {
+  data: function() {
     return {
-      boardName: "",
-      boardDescription: "",
+      boardName: '',
+      boardDescription: '',
       modal: {},
+      boards: [],
     };
   },
   computed: {
-    ...mapGetters("access", ["getUser"]),
+    ...mapGetters('access', ['getUser']),
   },
-  mounted: function () {
-    if (this.getUser.username === "") {
-      const user =
-        Cookies.getJSON("user") || JSON.parse(sessionStorage.getItem("user"));
-
-      this.$store.dispatch("access/setUser", user);
+  mounted: function() {
+    if (this.getUser.username === '') {
+      this.$store.dispatch('access/setUser', user);
     }
 
-    this.modal = new BSModal(document.getElementById("tsk-modal"), {});
+    this.$store.dispatch('boards/getBoards');
+
+    this.modal = new BSModal(document.getElementById('tsk-modal'), {});
   },
   methods: {
-    toggleModal: function () {
+    toggleModal: function() {
       this.modal.toggle();
     },
-    createBoard: function () {
+    createBoard: function() {
+      this.$store.dispatch('boards/createBoard');
+
       this.clearForm();
       this.toggleModal();
 
       //TODO llamada a createBoard y asignarla aquí (si todo ok, traer boards por usuario. si no, no se cierra modal y se manda error)
     },
     clearForm() {
-      this.boardName = "";
-      this.boardDescription = "";
+      this.boardName = '';
+      this.boardDescription = '';
     },
   },
 };
@@ -111,7 +122,7 @@ export default {
 .boards {
   &--wrapper {
     min-height: 100vh;
-    background-image: url("../assets/board-bg.png");
+    background-image: url('../assets/board-bg.png');
     background-repeat: repeat;
   }
 
