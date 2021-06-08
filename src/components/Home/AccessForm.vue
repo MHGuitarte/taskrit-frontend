@@ -11,7 +11,7 @@
         :class="{ 'mt-4 pt-4': isLogin }"
       />
       <h1 class="access--title" :class="{ 'text-center': isLogin }">
-        {{ isLogin ? "Bienvenido" : "taskrIt" }}
+        {{ isLogin ? 'Bienvenido' : 'taskrIt' }}
       </h1>
     </div>
     <form
@@ -57,9 +57,9 @@
     </form>
     <div
       class="my-3 mx-5 p-2 alert"
-      :class="`d-${accessMsg.message ? 'block' : 'none'} alert-${
-        accessMsg.type
-      }`"
+      :class="
+        `d-${accessMsg.message ? 'block' : 'none'} alert-${accessMsg.type}`
+      "
       role="alert"
     >
       {{ accessMsg.message }}
@@ -77,7 +77,7 @@
           "
           @click.prevent="changeLoginPage"
         >
-          {{ isLogin ? "Registro" : "Acceso" }}
+          {{ isLogin ? 'Registro' : 'Acceso' }}
         </button>
         <button
           type="submit"
@@ -91,7 +91,7 @@
             access--btn access--btn--continue
           "
         >
-          {{ isLogin ? "Acceder" : "Registrarse" }}
+          {{ isLogin ? 'Acceder' : 'Registrarse' }}
         </button>
       </div>
     </div>
@@ -99,47 +99,53 @@
 </template>
 
 <script>
-import { mapState, mapGetters } from "vuex";
-import AssetsImage from "../Base/AssetsImage.vue";
+import { mapState, mapGetters } from 'vuex';
+import AssetsImage from '../Base/AssetsImage.vue';
 
 export default {
-  name: "AccessForm",
+  name: 'AccessForm',
   components: { AssetsImage },
-  data: function () {
+  data: function() {
     return {
-      username: "",
-      email: "",
-      password: "",
+      username: '',
+      email: '',
+      password: '',
     };
   },
   computed: {
     ...mapState({
       accessError: (state) => state.access.accessError,
     }),
-    ...mapGetters("access", ["isLogin", "accessMsg", "getUser"]),
+    ...mapGetters('access', ['isLogin', 'accessMsg', 'getUser']),
   },
   methods: {
-    register: function () {
-      this.$store.dispatch("access/registerUser", {
+    register: function() {
+      this.$store.dispatch('access/registerUser', {
         username: this.username,
         email: this.email,
         password: this.password,
       });
     },
-    login: async function () {
-      const isLogedSuccesfully = await this.$store.dispatch("access/loginUser", {
-        username: this.username,
-        password: this.password,
-      });
+    login: async function() {
+      const isLogedSuccesfully = await this.$store.dispatch(
+        'access/loginUser',
+        {
+          username: this.username,
+          password: this.password,
+        }
+      );
 
       if (isLogedSuccesfully) {
         this.$router.push({
-          name: "Boards",
+          name: 'Boards',
+          params: {
+            id: this.username,
+          },
         });
       }
     },
-    changeLoginPage: function () {
-      this.$store.dispatch("access/changeLoginPage");
+    changeLoginPage: function() {
+      this.$store.dispatch('access/changeLoginPage');
     },
   },
 };

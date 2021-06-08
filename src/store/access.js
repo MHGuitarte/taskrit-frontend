@@ -1,5 +1,5 @@
 import UserService from '@/service/UserService';
-import Cookies from 'js-cookie';
+import User from '@/utils/User';
 
 export default {
   namespaced: true,
@@ -65,8 +65,10 @@ export default {
       }
     },
 
-    async loginUser({ commit, dispatch }, { username, password, save = false }) {
-
+    async loginUser(
+      { commit, dispatch },
+      { username, password, save = false }
+    ) {
       const loggedUser = await UserService.login({
         username,
         password,
@@ -75,23 +77,22 @@ export default {
 
       if (loggedUser.token) {
         commit('user', { id: loggedUser.id, username: loggedUser.username });
-        let a = true
-        if (a) {
-          Cookies.set('user', JSON.stringify({ id: loggedUser.id, username: loggedUser.username, token: loggedUser.token }), { expires: 7, sameSite: 'none', secure: true });
-        } else {
-          sessionStorage.setItem('user', JSON.stringify({ id: loggedUser.id, username: loggedUser.username, token: loggedUser.token }));
-        }
 
+        User.setUser(loggedUser); // saveLogin: true : false for session / cookie user storage
         return true;
       } else {
         dispatch('setAccessMsg', {
           type: 'danger',
-          message:
-            'Usuario o contraseña incorrectos',
+          message: 'Usuario o contraseña incorrectos',
         });
 
         return false;
       }
+    },
+
+    logout({ commit }) {
+      commit('user', { id: '', username: '' });
+      User.removeUser();
     },
   },
 };

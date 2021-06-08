@@ -18,10 +18,15 @@ export default {
       (state.selectedBoard = selectedBoard),
   },
   getters: {
-    boards: (state) => state.boards,
+    boards: (state) =>
+      state.boards.sort((a, b) => a.name.localeCompare(b.name)),
     selectedBoard: (state) => state.selectedBoard,
   },
   actions: {
+    setSelectedBoard({ commit }, { selectedBoard }) {
+      commit('selectedBoard', selectedBoard);
+    },
+
     async getBoards({ commit }) {
       try {
         const boards = await BoardService.getBoards();
@@ -33,20 +38,24 @@ export default {
       }
     },
 
-    async createBoard({ commit, dispatch }, { name, description }) {
+    async createBoard({ commit }, { name, description }) {
       try {
         const newBoard = await BoardService.createBoard({
           name,
           description,
         });
 
-        if (newBoard.id) {
-          dispatch('getBoards');
+        console.log(newBoard);
 
-          commit('selectedBoard', {});
+        if (newBoard.id) {
+          commit('selectedBoard', newBoard);
+          return true;
+        } else {
+          return false;
         }
       } catch (error) {
         console.error(error);
+        return false;
       }
     },
   },

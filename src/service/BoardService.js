@@ -1,5 +1,5 @@
 import axios from 'axios';
-import user from '@/utils/User';
+import User from '@/utils/User';
 
 const API_URL = process.env.API_URL || 'http://localhost:8080';
 
@@ -24,8 +24,8 @@ const BoardService = {
   getBoards: async () => {
     try {
       const boards = await (
-        await axios.get(getBoardsUrl(user.id), null, {
-          headers: { Authorization: `Bearer ${user.token}` },
+        await axios.get(getBoardsUrl(User.getUser().id), {
+          headers: { Authorization: `Bearer ${User.getUser().token}` },
         })
       ).data;
 
@@ -37,15 +37,19 @@ const BoardService = {
 
   createBoard: async ({ name, description }) => {
     try {
-      return await axios.post(
-        createBoardUrl,
-        {
-          userId: user.id,
-          name,
-          description,
-        },
-        { headers: { Authorization: `Bearer ${user.token}` } }
-      );
+      const board = await (
+        await axios.post(
+          createBoardUrl,
+          {
+            userId: User.getUser().id,
+            name,
+            description,
+          },
+          { headers: { Authorization: `Bearer ${User.getUser().token}` } }
+        )
+      ).data;
+
+      return parseBoard(board);
     } catch (error) {
       console.error(error);
     }

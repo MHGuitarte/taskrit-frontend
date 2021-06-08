@@ -22,6 +22,8 @@
 <script>
 import { mapGetters } from 'vuex';
 
+import User from '@/utils/User';
+
 import AccessForm from '../components/Home/AccessForm.vue';
 import AssetsImage from '../components/Base/AssetsImage.vue';
 
@@ -33,6 +35,13 @@ export default {
   },
   computed: {
     ...mapGetters('access', ['isLogin']),
+  },
+  mounted: async function() {
+    if (User.getUser().token) {
+      this.$router.push({ name: 'Boards', params: { id: User.getUser().username } });
+    } else {
+      this.$store.dispatch('access/setUser', { id: '', username: '' });
+    }
   },
 };
 </script>

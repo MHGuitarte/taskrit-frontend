@@ -22,7 +22,7 @@
             <div v-for="board in boards" :key="board.id">
               <div class="row">
                 <h3>{{ board.name }}</h3>
-                <p>{{ board.description }}</p>
+                <h6>{{ board.description }}</h6>
               </div>
             </div>
           </div>
@@ -74,7 +74,7 @@ import { Modal as BSModal } from 'bootstrap';
 import LateralMenu from '@/components/Base/LateralMenu.vue';
 import Modal from '@/components/Base/Modal.vue';
 
-import user from '@/utils/User';
+import User from '@/utils/User';
 
 export default {
   components: { LateralMenu, Modal },
@@ -83,18 +83,18 @@ export default {
       boardName: '',
       boardDescription: '',
       modal: {},
-      boards: [],
     };
   },
   computed: {
     ...mapGetters('access', ['getUser']),
+    ...mapGetters('boards', ['boards']),
   },
-  mounted: function() {
+  mounted: async function() {
     if (this.getUser.username === '') {
-      this.$store.dispatch('access/setUser', user);
+      this.$store.dispatch('access/setUser', User.getUser());
     }
 
-    this.$store.dispatch('boards/getBoards');
+    await this.$store.dispatch('boards/getBoards');
 
     this.modal = new BSModal(document.getElementById('tsk-modal'), {});
   },
@@ -102,17 +102,36 @@ export default {
     toggleModal: function() {
       this.modal.toggle();
     },
-    createBoard: function() {
-      this.$store.dispatch('boards/createBoard');
+    createBoard: async function() {
+      const boardCreated = await this.$store.dispatch('boards/createBoard', {
+        name: this.boardName,
+        description: this.boardDescription,
+      });
 
-      this.clearForm();
-      this.toggleModal();
+      if (boardCreated) {
+        await this.$store.dispatch('boards/getBoards');
+        this.clearForm();
+        this.toggleModal();
+      } else {
+        this.createBoardError =
+          'Error a la hora de crear un nuevo tablero. Por favor, inténtalo más tarde';
+      }
+    },
 
-      //TODO llamada a createBoard y asignarla aquí (si todo ok, traer boards por usuario. si no, no se cierra modal y se manda error)
+    selectBoard: function(selection) {
+      this.$store.dispatch(
+        'boards/setSelectedBoard',
+        this.getBoardById(selection)
+      );
+
+      this.$router.push({ name: 'Board', params: { id: this.selectBoard.id } });
     },
     clearForm() {
       this.boardName = '';
       this.boardDescription = '';
+    },
+    getBoardById(boardId) {
+      return this.boards.filter(({ id }) => id === boardId);
     },
   },
 };
