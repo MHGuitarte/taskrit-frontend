@@ -45,8 +45,6 @@ export default {
           description,
         });
 
-        console.log(newBoard);
-
         if (newBoard.id) {
           commit('selectedBoard', newBoard);
           return true;

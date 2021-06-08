@@ -20,6 +20,10 @@ library.add(faUser, faPlus, faHome, faCog, faSignOutAlt)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
+import User from '@/utils/User';
+
+Vue.prototype.$user = User;
+
 Vue.config.productionTip = false
 
 new Vue({

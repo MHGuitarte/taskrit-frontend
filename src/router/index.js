@@ -46,7 +46,7 @@ router.beforeEach(async (to, from, next) => {
   if (to.matched.some((record) => record.meta.requiresAuth)) {
     if (!User.exists) {
       next({
-        path: '/',
+        name: "Home",
         params: { nextUrl: to.fullPath },
       });
     } else {
@@ -60,7 +60,7 @@ router.beforeEach(async (to, from, next) => {
         User.removeUser();
 
         next({
-          path: '/',
+          name: "Home",
           params: { nextUrl: to.fullPath },
         });
       }

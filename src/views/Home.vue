@@ -43,6 +43,7 @@ export default {
         params: { id: User.getUser.username },
       });
     } else {
+      User.removeUser();
       this.$store.dispatch('access/setUser', { id: '', username: '' });
     }
   },

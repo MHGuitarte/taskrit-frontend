@@ -1,9 +1,15 @@
 import Cookies from 'js-cookie';
-const User = {
-  exists: () => Cookies.get('user') || sessionStorage.getItem('user'),
 
-  getUser:
-    Cookies.getJSON('user') || JSON.parse(sessionStorage.getItem('user')),
+// TODO:  cargarse esto y meterlo todo en el state user
+const User = {
+  getUser: Cookies.getJSON('user') ||
+    JSON.parse(sessionStorage.getItem('user')) || {
+      id: undefined,
+      username: undefined,
+      token: undefined,
+    },
+
+  exists: () => Cookies.get('user') || sessionStorage.getItem('user'),
 
   removeUser: () => {
     Cookies.remove('user');

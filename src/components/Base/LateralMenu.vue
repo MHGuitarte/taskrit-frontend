@@ -25,6 +25,7 @@
         <font-awesome-icon
           icon="sign-out-alt"
           class="lateral-menu--icon lateral-menu--icon--exit"
+          @click="logout"
         />
       </div>
     </div>
@@ -37,6 +38,12 @@ export default {
     user: {
       type: Object,
       default: () => {},
+    },
+  },
+  methods: {
+    async logout() {
+      await this.$store.dispatch('access/logout');
+      this.$router.push({ name: 'Home' });
     },
   },
 };

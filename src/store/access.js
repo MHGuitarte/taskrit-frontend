@@ -78,7 +78,9 @@ export default {
       if (loggedUser.token) {
         commit('user', { id: loggedUser.id, username: loggedUser.username });
 
-        User.setUser(loggedUser); // saveLogin: true : false for session / cookie user storage
+        User.setUser(loggedUser, false); // saveLogin: true : false for session / cookie user storage
+
+        console.log(this.$user.getUser);
         return true;
       } else {
         dispatch('setAccessMsg', {
@@ -90,9 +92,9 @@ export default {
       }
     },
 
-    logout({ commit }) {
-      commit('user', { id: '', username: '' });
-      User.removeUser();
+    async logout({ commit }) {
+      await commit('user', { id: '', username: '' });
+      await User.removeUser();
     },
   },
 };
