@@ -91,7 +91,7 @@ export default {
   },
   mounted: async function() {
     if (this.getUser.username === '') {
-      this.$store.dispatch('access/setUser', User.getUser());
+      this.$store.dispatch('access/setUser', User.getUser);
     }
 
     await this.$store.dispatch('boards/getBoards');

@@ -50,7 +50,7 @@ router.beforeEach(async (to, from, next) => {
         params: { nextUrl: to.fullPath },
       });
     } else {
-      const { token } = await User.getUser();
+      const { token } = await User.getUser;
 
       const isTokenCorrect = await UserService.checkToken(token);
 

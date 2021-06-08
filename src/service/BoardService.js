@@ -24,8 +24,8 @@ const BoardService = {
   getBoards: async () => {
     try {
       const boards = await (
-        await axios.get(getBoardsUrl(User.getUser().id), {
-          headers: { Authorization: `Bearer ${User.getUser().token}` },
+        await axios.get(getBoardsUrl(User.getUser.id), {
+          headers: { Authorization: `Bearer ${User.getUser.token}` },
         })
       ).data;
 
@@ -41,11 +41,11 @@ const BoardService = {
         await axios.post(
           createBoardUrl,
           {
-            userId: User.getUser().id,
+            userId: User.getUser.id,
             name,
             description,
           },
-          { headers: { Authorization: `Bearer ${User.getUser().token}` } }
+          { headers: { Authorization: `Bearer ${User.getUser.token}` } }
         )
       ).data;
 

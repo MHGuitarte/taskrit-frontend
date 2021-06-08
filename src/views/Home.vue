@@ -37,8 +37,11 @@ export default {
     ...mapGetters('access', ['isLogin']),
   },
   mounted: async function() {
-    if (User.getUser().token) {
-      this.$router.push({ name: 'Boards', params: { id: User.getUser().username } });
+    if (User.getUser.token) {
+      this.$router.push({
+        name: 'Boards',
+        params: { id: User.getUser.username },
+      });
     } else {
       this.$store.dispatch('access/setUser', { id: '', username: '' });
     }
