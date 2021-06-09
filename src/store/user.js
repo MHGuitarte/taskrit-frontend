@@ -8,6 +8,7 @@ export default {
       username: '',
       token: '',
       saveLogin: false,
+      avatar: ''
     },
   },
   mutations: {
@@ -19,6 +20,7 @@ export default {
         username: '',
         token: '',
         saveLogin: false,
+        avatar: ''
       };
     },
 
@@ -45,6 +47,7 @@ export default {
             username: user.username,
             token: user.token,
             saveLogin: user.saveLogin,
+            avatar: user.avatar || ''
           }),
           { expires: 7, sameSite: 'none', secure: true }
         );
@@ -56,6 +59,7 @@ export default {
             username: user.username,
             token: user.token,
             saveLogin: user.saveLogin,
+            avatar: user.avatar || ''
           })
         );
       }
