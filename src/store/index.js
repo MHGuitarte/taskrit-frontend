@@ -3,6 +3,7 @@ import Vuex from 'vuex';
 
 import access from './access';
 import boards from './boards';
+import user from './user';
 
 Vue.use(Vuex);
 
@@ -14,5 +15,6 @@ export default new Vuex.Store({
   modules: {
     access: access,
     boards: boards,
+    user: user,
   },
 });

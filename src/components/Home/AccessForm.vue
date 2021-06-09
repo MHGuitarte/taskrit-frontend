@@ -116,7 +116,7 @@ export default {
     ...mapState({
       accessError: (state) => state.access.accessError,
     }),
-    ...mapGetters('access', ['isLogin', 'accessMsg', 'getUser']),
+    ...mapGetters('access', ['isLogin', 'accessMsg']),
   },
   methods: {
     register: function() {

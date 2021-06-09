@@ -27,9 +27,9 @@ export default {
       commit('selectedBoard', selectedBoard);
     },
 
-    async getBoards({ commit }) {
+    async getBoards({ commit }, { user } ) {
       try {
-        const boards = await BoardService.getBoards();
+        const boards = await BoardService.getBoards(user);
         if (boards) {
           commit('boards', boards);
         }
@@ -38,9 +38,10 @@ export default {
       }
     },
 
-    async createBoard({ commit }, { name, description }) {
+    async createBoard({ commit }, { user, name, description }) {
       try {
         const newBoard = await BoardService.createBoard({
+          user,
           name,
           description,
         });

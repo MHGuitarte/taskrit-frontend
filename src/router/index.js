@@ -1,11 +1,10 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import UserService from '../service/UserService';
-
+import Cookies from 'js-cookie';
 import Home from '../views/Home';
 import Boards from '../views/Boards';
 import Board from '../views/Board';
-import User from '../utils/User';
 
 Vue.use(VueRouter);
 
@@ -43,25 +42,35 @@ const router = new VueRouter({
 });
 
 router.beforeEach(async (to, from, next) => {
+  const user =
+    await Cookies.getJSON('user') || await JSON.parse(sessionStorage.getItem('user'));
+
+  const removeUser = () => {
+    Cookies.remove('user');
+    sessionStorage.removeItem('user');
+  };
+
   if (to.matched.some((record) => record.meta.requiresAuth)) {
-    if (!User.exists) {
+    if (!user?.token) {
+      removeUser();
+
       next({
-        name: "Home",
-        params: { nextUrl: to.fullPath },
+        name: 'Home',
+        params: { nextUrl: to.fullPath, removeUser: true },
       });
     } else {
-      const { token } = await User.getUser;
+      const { token } = user;
 
       const isTokenCorrect = await UserService.checkToken(token);
 
       if (isTokenCorrect === true) {
         next();
       } else {
-        User.removeUser();
+        removeUser();
 
         next({
-          name: "Home",
-          params: { nextUrl: to.fullPath },
+          name: 'Home',
+          params: { nextUrl: to.fullPath, removeUser: true },
         });
       }
     }

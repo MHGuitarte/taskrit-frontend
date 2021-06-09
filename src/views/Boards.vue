@@ -1,8 +1,8 @@
 <template>
   <div class="container-flex boards--wrapper">
-    <LateralMenu :user="getUser" />
+    <LateralMenu :user="user || {}" />
     <h1 class="row col-9 offset-1 pt-3 boards--user-title">
-      Bienvenido, {{ getUser.username }}
+      Bienvenido, {{ user.username || '' }}
     </h1>
 
     <div class="container">
@@ -19,12 +19,11 @@
             </div>
           </div>
           <div class="container">
-            <div v-for="board in boards" :key="board.id">
-              <div class="row">
-                <h3>{{ board.name }}</h3>
-                <h6>{{ board.description }}</h6>
-              </div>
-            </div>
+            <BoardListItem
+              v-for="board in boards"
+              :key="board.id"
+              :board="board"
+            />
           </div>
         </div>
       </div>
@@ -72,12 +71,11 @@
 import { mapGetters } from 'vuex';
 import { Modal as BSModal } from 'bootstrap';
 import LateralMenu from '@/components/Base/LateralMenu.vue';
+import BoardListItem from '@/components/Board/BoardListItem.vue';
 import Modal from '@/components/Base/Modal.vue';
 
-import User from '@/utils/User';
-
 export default {
-  components: { LateralMenu, Modal },
+  components: { LateralMenu, Modal, BoardListItem },
   data: function() {
     return {
       boardName: '',
@@ -86,15 +84,12 @@ export default {
     };
   },
   computed: {
-    ...mapGetters('access', ['getUser']),
-    ...mapGetters('boards', ['boards']),
+    ...mapGetters('boards', ['boards', 'selectedBoard']),
+    ...mapGetters('user', ['user']),
   },
   mounted: async function() {
-    if (this.getUser.username === '') {
-      this.$store.dispatch('access/setUser', User.getUser);
-    }
-
-    await this.$store.dispatch('boards/getBoards');
+    await this.$store.dispatch('user/setUserState');
+    await this.$store.dispatch('boards/getBoards', { user: this.user });
 
     this.modal = new BSModal(document.getElementById('tsk-modal'), {});
   },
@@ -103,28 +98,27 @@ export default {
       this.modal.toggle();
     },
     createBoard: async function() {
-      const boardCreated = await this.$store.dispatch('boards/createBoard', {
+      const isBoardCreated = await this.$store.dispatch('boards/createBoard', {
+        user: this.user,
         name: this.boardName,
         description: this.boardDescription,
       });
 
-      if (boardCreated) {
-        await this.$store.dispatch('boards/getBoards');
+      if (isBoardCreated) {
+        await this.$store.dispatch('boards/getBoards', { user: this.user });
         this.clearForm();
         this.toggleModal();
+
+        this.$router.push({
+          name: 'Board',
+          params: {
+            id: this.selectedBoard.id,
+          },
+        });
       } else {
         this.createBoardError =
           'Error a la hora de crear un nuevo tablero. Por favor, inténtalo más tarde';
       }
-    },
-
-    selectBoard: function(selection) {
-      this.$store.dispatch(
-        'boards/setSelectedBoard',
-        this.getBoardById(selection)
-      );
-
-      this.$router.push({ name: 'Board', params: { id: this.selectBoard.id } });
     },
     clearForm() {
       this.boardName = '';
