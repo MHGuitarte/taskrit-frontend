@@ -27,7 +27,7 @@ export default {
       commit('selectedBoard', selectedBoard);
     },
 
-    async getBoards({ commit }, { user } ) {
+    async getBoards({ commit }, { user }) {
       try {
         const boards = await BoardService.getBoards(user);
         if (boards) {
@@ -52,6 +52,22 @@ export default {
         } else {
           return false;
         }
+      } catch (error) {
+        console.error(error);
+        return false;
+      }
+    },
+
+    async getBoardById({ commit }, { user, boardId }) {
+      try {
+        const board = await BoardService.getBoardById({ user, boardId });
+
+        if (board.id) {
+          commit('selectedBoard', board);
+          return true;
+        }
+
+        return false;
       } catch (error) {
         console.error(error);
         return false;

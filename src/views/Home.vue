@@ -36,13 +36,17 @@ export default {
     ...mapGetters('user', ['user']),
   },
   mounted: async function() {
-    if (this.$store.dispatch('userExists')) {
+    if (this.$store.dispatch('user/userExists')) {
       this.$router.push({
         name: 'Boards',
         params: { id: this.user.username },
       });
     } else {
-      this.$store.dispatch('removeUser');
+      this.$store.dispatch('user/removeUser');
+    }
+
+    if (this.$route.params?.removeUser) {
+      this.$store.dispatch('user/removeUser');
     }
   },
 };

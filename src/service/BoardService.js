@@ -4,6 +4,8 @@ const API_URL = process.env.API_URL || 'http://localhost:8080';
 
 const getBoardsUrl = (userId) => `${API_URL}/board/${userId}`;
 const createBoardUrl = `${API_URL}/board/create`;
+const getBoardByIdUrl = (userId, boardId) =>
+  `${API_URL}/board/${userId}/${boardId}`;
 
 const parseBoard = ({
   boardId,
@@ -46,6 +48,20 @@ const BoardService = {
           },
           { headers: { Authorization: `Bearer ${user.token}` } }
         )
+      ).data;
+
+      return parseBoard(board);
+    } catch (error) {
+      console.error(error);
+    }
+  },
+
+  getBoardById: async ({ user, boardId }) => {
+    try {
+      const board = await (
+        await axios.get(getBoardByIdUrl(user.id, boardId), {
+          headers: { Authorization: `Bearer ${user.token}` },
+        })
       ).data;
 
       return parseBoard(board);

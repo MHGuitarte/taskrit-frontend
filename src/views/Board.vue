@@ -2,7 +2,7 @@
   <div class="container-flex board--wrapper">
     <LateralMenu :user="user" />
     <h1 class="row col-9 offset-1 pt-3 boards--user-title">
-      {{ board.name || '' }}
+      {{ selectedBoard.name || '' }}
     </h1>
 
     <div class="container board--lists--container">
@@ -34,12 +34,25 @@ export default {
     ...mapGetters('user', ['user']),
     ...mapGetters('boards', ['selectedBoard']),
   },
-  mounted: function() {
-    //TODO: get board by Id board
+  mounted: async function() {
+    if (!this.user.id) {
+      await this.$store.dispatch('user/setUserState');
+    }
+
     if (!this.selectedBoard.id) {
-      this.$store.dispatch('boards/setSelectedBoard', {
-        selectedBoard: this.board,
-      });
+      if (this.$route.params.id && this.user.id) {
+        this.$store.dispatch('boards/getBoardById', {
+          user: this.user,
+          boardId: this.$route.params.id,
+        });
+      } else {
+        this.$router.push({
+          name: 'Boards',
+          params: {
+            id: this.user.username,
+          },
+        });
+      }
     }
   },
 };
