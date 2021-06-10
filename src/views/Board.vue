@@ -5,36 +5,51 @@
       {{ selectedBoard.name || '' }}
     </h1>
 
-    <div class="container board--lists--container">
-      <div>
-        <h3>ejemplo 1</h3>
-      </div>
-      <div>
-        <h3>ejemplo 2</h3>
-      </div>
-      <div>
-        <h3>ejemplo 3</h3>
-      </div>
-      <div>
-        <h3>ejemplo 4</h3>
+    <div class="container mt-5">
+      <div class="row">
+        <div class="col-12 mt-5 pb-3 board--lists--container">
+          <List />
+          <div class="list--container p-1">
+            <h2>Lista 2</h2>
+          </div>
+          <div class="list--container p-1">
+            <h2>Lista 3</h2>
+          </div>
+          <div class="list--container p-1">
+            <h2>Lista 4</h2>
+          </div>
+          <div class="list--container p-1">
+            <h2>Lista 4</h2>
+          </div>
+          <div class="list--container p-1">
+            <h2 class="list--title">Lista 5</h2>
+          </div>          <div class="list--container p-1">
+            <h2 class="list--title">Lista 5</h2>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import LateralMenu from '@/components/Base/LateralMenu.vue';
 import { mapGetters } from 'vuex';
+
+import LateralMenu from '@/components/Base/LateralMenu.vue';
+import List from '@/components/BoardDetails/List.vue';
 
 export default {
   components: {
     LateralMenu,
+    List,
   },
   computed: {
     ...mapGetters('user', ['user']),
     ...mapGetters('boards', ['selectedBoard']),
   },
   mounted: async function() {
+    this.$store.dispatch('setAppBackground');
+
     if (!this.user.id) {
       await this.$store.dispatch('user/setUserState');
     }
@@ -62,14 +77,16 @@ export default {
 .board {
   &--wrapper {
     min-height: 100vh;
-    background-image: url('../assets/board-bg.png');
-    background-repeat: repeat;
+    max-height: 100%;
   }
 
   &--lists {
     &--container {
       display: grid;
-      grid-template-columns: repeat(50% 50%);
+      grid-template-columns: 48% 48%;
+      grid-auto-rows: minmax(100%, 100px);
+      row-gap: 10%;
+      column-gap: 2%;
     }
   }
 }

@@ -27,6 +27,16 @@ export default {
       commit('selectedBoard', selectedBoard);
     },
 
+    clearSelectedBoard({ commit }) {
+      commit('selectedBoard', {
+        id: '',
+        name: '',
+        description: '',
+        role: '',
+        lists: [],
+      });
+    },
+
     async getBoards({ commit }, { user }) {
       try {
         const boards = await BoardService.getBoards(user);

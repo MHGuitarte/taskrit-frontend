@@ -11,7 +11,15 @@ export default new Vuex.Store({
   state: {},
   mutations: {},
   getters: {},
-  actions: {},
+  actions: {
+    setAppBackground() {
+      if (window.location.href.includes('/board')) {
+        document.body.classList.add('app-background');
+      } else {
+        document.body.classList.add('standard-background');
+      }
+    },
+  },
   modules: {
     access: access,
     boards: boards,

@@ -18,4 +18,12 @@ export default {
 #app {
   overflow-x: hidden;
 }
+
+.app-background {
+  background: url('./assets/board-bg.png') repeat;
+}
+
+.regular-background {
+  background-color: $background;
+}
 </style>

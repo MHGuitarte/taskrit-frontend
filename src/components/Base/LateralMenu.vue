@@ -11,16 +11,14 @@
         v-if="$route.name === 'Board'"
         icon="plus"
         class="lateral-menu--icon lateral-menu--icon--plus"
+        @click="$emit('createList')"
       />
       <div class="d-flex flex-column justify-content-evenly align-items-center">
         <font-awesome-icon
           v-if="$route.name === 'Board'"
           icon="home"
           class="lateral-menu--icon lateral-menu--icon--home"
-        />
-        <font-awesome-icon
-          icon="cog"
-          class="lateral-menu--icon lateral-menu--icon--config"
+          @click="goToBoards"
         />
         <font-awesome-icon
           icon="sign-out-alt"
@@ -44,6 +42,11 @@ export default {
     async logout() {
       await this.$store.dispatch('access/logout');
       this.$router.push({ name: 'Home' });
+    },
+
+    async goToBoards() {
+      await this.$store.dispatch('boards/clearSelectedBoard');
+      this.$router.push({ name: 'Boards', params: { id: this.user.username } });
     },
   },
 };

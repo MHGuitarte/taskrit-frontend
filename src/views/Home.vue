@@ -36,6 +36,8 @@ export default {
     ...mapGetters('user', ['user']),
   },
   mounted: async function() {
+    this.$store.dispatch('setAppBackground');
+
     if (this.$store.dispatch('user/userExists')) {
       this.$router.push({
         name: 'Boards',

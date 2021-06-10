@@ -71,7 +71,7 @@
 import { mapGetters } from 'vuex';
 import { Modal as BSModal } from 'bootstrap';
 import LateralMenu from '@/components/Base/LateralMenu.vue';
-import BoardListItem from '@/components/Board/BoardListItem.vue';
+import BoardListItem from '@/components/Boards/BoardListItem.vue';
 import Modal from '@/components/Base/Modal.vue';
 
 export default {
@@ -88,6 +88,8 @@ export default {
     ...mapGetters('user', ['user']),
   },
   mounted: async function() {
+    this.$store.dispatch('setAppBackground');
+
     await this.$store.dispatch('user/setUserState');
     await this.$store.dispatch('boards/getBoards', { user: this.user });
 
@@ -135,8 +137,6 @@ export default {
 .boards {
   &--wrapper {
     min-height: 100vh;
-    background-image: url('../assets/board-bg.png');
-    background-repeat: repeat;
   }
 
   &--user-title {
