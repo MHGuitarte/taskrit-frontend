@@ -11,7 +11,7 @@
         v-if="$route.name === 'Board'"
         icon="plus"
         class="lateral-menu--icon lateral-menu--icon--plus"
-        @click="$emit('createList')"
+        @click="createList"
       />
       <div class="d-flex flex-column justify-content-evenly align-items-center">
         <font-awesome-icon
@@ -48,6 +48,13 @@ export default {
       await this.$store.dispatch('boards/clearSelectedBoard');
       this.$router.push({ name: 'Boards', params: { id: this.user.username } });
     },
+
+    createList() {
+      this.$store.dispatch("boards/setModalInfo", {
+        modalTitle: "Crear nueva lista",
+        modalTargetForm: "create-list-form"
+      })
+    }
   },
 };
 </script>

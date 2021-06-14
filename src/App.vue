@@ -7,8 +7,8 @@
 <script>
 export default {
   methods: {
-    toggleModal: function() {
-      this.$store.dispatch('access/toggleAccessModal');
+    toggleModal: function () {
+      this.$store.dispatch("access/toggleAccessModal");
     },
   },
 };
@@ -17,10 +17,11 @@ export default {
 <style lang="scss" global>
 #app {
   overflow-x: hidden;
+  display: contents;
 }
 
 .app-background {
-  background: url('./assets/board-bg.png') repeat;
+  background: url("./assets/board-bg.png") repeat;
 }
 
 .regular-background {

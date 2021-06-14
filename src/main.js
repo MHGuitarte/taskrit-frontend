@@ -14,9 +14,9 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 // FontAwesome Icons
-import { faUser, faPlus, faHome, faCog, faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
+import { faUser, faPlus, faHome, faCog, faSignOutAlt, faExchangeAlt, faClock } from '@fortawesome/free-solid-svg-icons'
 
-library.add(faUser, faPlus, faHome, faCog, faSignOutAlt)
+library.add(faUser, faPlus, faHome, faCog, faSignOutAlt, faExchangeAlt, faClock)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 

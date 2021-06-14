@@ -1,6 +1,7 @@
 body,
 html {
   background-color: $background;
+  min-height: fit-content;
 
   & * {
     margin: 0;
@@ -50,4 +51,14 @@ label {
   font-size: $h4;
   font-family: $heading;
   color: $primary;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
 }

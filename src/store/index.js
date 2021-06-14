@@ -15,8 +15,10 @@ export default new Vuex.Store({
     setAppBackground() {
       if (window.location.href.includes('/board')) {
         document.body.classList.add('app-background');
+        document.documentElement.classList.add('app-background');
       } else {
         document.body.classList.add('standard-background');
+        document.documentElement.classList.add('standard-background');
       }
     },
   },

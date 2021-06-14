@@ -23,6 +23,7 @@
         </div>
         <div class="modal-footer">
           <button
+            v-if="targetForm"
             type="button"
             class="btn btn-danger"
             data-bs-dismiss="modal"
@@ -42,7 +43,7 @@
             v-else
             type="submit"
             class="btn btn-success"
-            @click="$emit('ok')"
+            data-bs-dismiss="modal"
           >
             {{ confirmText }}
           </button>
@@ -79,6 +80,10 @@ export default {
 #modal {
   &--container {
     background-color: $background;
+
+    > * {
+      background-color: $background;
+    }
   }
 
   &--title {
