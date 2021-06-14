@@ -1,28 +1,30 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div id="app" class="container-flex">
+    <router-view />
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+  methods: {
+    toggleModal: function () {
+      this.$store.dispatch("access/toggleAccessModal");
+    },
+  },
+};
 </script>
 
-<style>
+<style lang="scss" global>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  overflow-x: hidden;
+  display: contents;
+}
+
+.app-background {
+  background: url("./assets/board-bg.png") repeat;
+}
+
+.regular-background {
+  background-color: $background;
 }
 </style>

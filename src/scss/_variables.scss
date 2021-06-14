@@ -1,0 +1,52 @@
+// font imports
+@font-face {
+  font-family: "Roboto Medium";
+  src: url("https://fonts.googleapis.com/css2?family=Roboto");
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: "Roboto Bold";
+  src: url("https://fonts.googleapis.com/css2?family=Roboto");
+  font-weight: 900;
+}
+
+@font-face {
+  font-family: "Work Sans Regular";
+  src: url("https://fonts.googleapis.com/css2");
+}
+
+@font-face {
+  font-family: "Work Sans Italic";
+  src: url("https://fonts.googleapis.com/css2?family=Work+Sans");
+  font-weight: 400;
+  font-style: italic;
+}
+
+// colors
+$primary: #107dac;
+$primary-light: #4fbae8;
+$secondary: #6a7980;
+$accent: #ff8d0d;
+$background: #f1f9fd;
+$positive: #00885f;
+$negative: #ac3f10;
+$placeholder: rgba(112, 112, 112, 0.5);
+$black: #000000;
+$white: #ffffff;
+
+// fonts
+$heading: "Roboto Medium", Helvetica, Arial, sans-serif;
+$heading-bold: "Roboto Bold", Helvetica, Arial, sans-serif;
+$text: "Work Sans Regular", Helvetica, Arial;
+$text-italic: "Work Sans Italic", Helvetica, Arial;
+
+// font-size
+$access-title: 120px;
+$h1: 40px;
+$h2: 32px;
+$h3: 28px;
+$h4: 24px;
+$h5: 20px;
+$h6: 16px;
+$paragraph: 12px;
