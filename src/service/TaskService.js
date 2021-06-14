@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = process.env.API_URL || 'http://localhost:8080';
+const API_URL = process.env.VUE_APP_API_URL || 'http://localhost:8080';
 
 const getListTasksUrl = (listId) => `${API_URL}/task/${listId}`;
 const getTaskDetailsUrl = (taskId) => `${API_URL}/task/details/${taskId}`;
