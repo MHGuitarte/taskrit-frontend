@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = process.env.API_URL || 'http://localhost:8080';
+const API_URL = process.env.VUE_APP_API_URL || 'http://localhost:8080';
 
 const checkTokenUrl = `${API_URL}/user/checkToken`;
 const registerUrl = `${API_URL}/user/register`;
